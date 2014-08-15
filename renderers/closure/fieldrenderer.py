@@ -5,7 +5,10 @@ def render(field, owner):
     if field.has_prop('type'):
         field.remove_all_props('type')
     if field.type is not None:
-        field.add_prop('type', field.type.name)
+        if field.nullable:
+            field.add_prop('type', field.type.name)
+        else:
+            field.add_prop('type', '!' + field.type.name)
 
     result = ['/**', field.render_comment(), ' */']
 

@@ -1,15 +1,31 @@
 """
 Closure utilities.
 """
-from os.path import splitext
 import jsparser
 
 
-PRIMITIVE_TYPES = ['string', 'number', 'boolean', 'Array']
-JS_BUILTINS = set(['Infinity', 'NaN', 'null', 'undefined', 'true', 'false', 'window', 'document', 'this',  # Values
-                   'alert', 'confirm', 'decodeURI', 'decodeURIComponent', 'encodeURI', 'encodeURIComponent', 'escape', 'eval', 'isFinite', 'isNaN', 'parseFloat', 'parseInt', 'clearTimeout', 'setTimeout', 'unescape',  # Functions
-                   'Array', 'Boolean', 'Date', 'Function', 'Iterator', 'JSON', 'Math', 'Number', 'Object', 'String', 'Proxy', 'ParallelArray', 'RegExp',  # Base classes
-                   'Error', 'EvalError', 'RangeError', 'ReferenceError', 'SyntaxError', 'TypeError', 'URIError'])  # Errors
+PRIMITIVE_TYPES = ['string', 'number', 'boolean', 'Array', 'Object', 'Function']
+BUILT_IN_VARS = {'Infinity', 'NaN', 'null', 'undefined', 'true', 'false', 'window', 'document', 'this',  # Values
+                 'alert', 'confirm', 'decodeURI', 'decodeURIComponent', 'encodeURI', 'encodeURIComponent', 'escape', 'eval', 'isFinite', 'isNaN', 'parseFloat', 'parseInt', 'clearTimeout', 'setTimeout', 'unescape',  # Functions
+                 'Array', 'Boolean', 'Date', 'Function', 'Iterator', 'JSON', 'Math', 'Number', 'Object', 'String', 'Proxy', 'ParallelArray', 'RegExp',  # Base classes
+                 'Error', 'EvalError', 'RangeError', 'ReferenceError', 'SyntaxError', 'TypeError', 'URIError'}  # Errors
+
+PRIMITIVE_MAPPING = {
+    'str': 'string',
+    'string': 'string',
+    'bool': 'boolean',
+    'boolean': 'boolean',
+    'int': 'number',
+    'float': 'number',
+    'long': 'number',
+    'double': 'number'
+}
+
+PYTHON_CONTAINER_MAPPING = {
+    'set': 'Object',
+    'list': 'Array',
+    'dict': 'Object'
+}
 
 
 def is_primitive_type(ctype):
@@ -165,7 +181,7 @@ def parse_requires(code):
     requires -= defined
 
     # Remove the built-ins and superglobals
-    requires -= JS_BUILTINS
+    requires -= BUILT_IN_VARS
     requires -= set(['goog', 'zoosk', 'soy'])
 
     return requires

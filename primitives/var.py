@@ -1,5 +1,5 @@
 from autocode.primitives.nameable import Nameable
-from autocode.primitives.type import Type
+from autocode.primitives.autocode_type import Type
 
 
 class Var(Nameable):

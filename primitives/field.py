@@ -1,6 +1,6 @@
 from autocode.primitives.definable import Definable
 from autocode.primitives.document import Document
-from autocode.primitives.type import Type
+from autocode.primitives.autocode_type import Type
 from autocode.renderers import fieldrenderer
 from autocode import settings
 
@@ -17,13 +17,18 @@ class Field(Definable):
     #: This field's default value.
     value = None
 
-    def __init__(self, name, ctype, value=None, static=False, visibility='public', props=None):
+    #: Whether this value can be set to null.
+    nullable = True
+
+    def __init__(self, name, ctype, value=None, static=False, visibility='public', props=None, nullable=True):
         if type(ctype) == str:
             ctype = Type.get(ctype)
+        assert isinstance(ctype, Type)
         super(Field, self).__init__(name, props=props, visibility=visibility)
         self.type = ctype
         self.static = static
         self.value = value
+        self.nullable = nullable
 
     def compile(self, owner, compile_types=settings.compile_types):
         """ Perform actions to ready whatever this is for rendering """

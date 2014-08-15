@@ -28,21 +28,27 @@ def privatize_name(name):
     return name
 
 
-def publicize_name(name):
+def publicize_name(name, normalize=False):
     """ Create the public version of a name. """
+    if normalize:
+        name = normalize_name(name)
     if name[-1] == '_':
         return name[:-1]
     else:
         return name
 
 
-def classify_name(name):
+def classify_name(name, normalize=False):
     """ Create a version of a name that can be used as a class name. """
+    if normalize:
+        name = normalize_name(name)
     return publicize_name(name[0].upper() + name[1:])
 
 
-def varify_name(name):
+def varify_name(name, normalize=False):
     """ Create a version of a name that can be used as a variable. """
+    if normalize:
+        name = normalize_name(name)
     return publicize_name(name[0].lower() + name[1:])
 
 

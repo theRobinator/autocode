@@ -10,8 +10,9 @@ class Type(Nameable):
     #: The singleton registry for types
     _registry = {}
 
-    def __init__(self, name):
+    def __init__(self, name, subtype=None):
         super(Type, self).__init__(name)
+        self.subtype = subtype
 
     def compile(self, owner, parent_class=None):
         """ Perform actions to ready whatever owns this for rendering """

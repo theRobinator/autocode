@@ -1,5 +1,5 @@
 from autocode.primitives.definable import Definable
-from autocode.primitives.type import Type
+from autocode.primitives.autocode_type import Type
 from autocode.primitives.var import Var
 from autocode.renderers import classrenderer
 from autocode import settings

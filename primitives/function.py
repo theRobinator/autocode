@@ -1,6 +1,6 @@
 from autocode.primitives.definable import Definable
 from autocode.primitives.document import Document
-from autocode.primitives.type import Type
+from autocode.primitives.autocode_type import Type
 from autocode.renderers import functionrenderer
 from autocode.renderers import namerenderer
 from autocode import utils

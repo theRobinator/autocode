@@ -21,3 +21,4 @@ functionrenderer = __import__('autocode.renderers.%s.functionrenderer' % languag
 namerenderer = __import__('autocode.renderers.%s.namerenderer' % language, fromlist=['autocode.renderers', language])
 propertyrenderer = __import__('autocode.renderers.%s.propertyrenderer' % language, fromlist=['autocode.renderers', language])
 typerenderer = __import__('autocode.renderers.%s.typerenderer' % language, fromlist=['autocode.renderers', language])
+valuerenderer = __import__('autocode.renderers.%s.valuerenderer' % language, fromlist=['autocode.renderers', language])

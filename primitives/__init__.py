@@ -6,5 +6,5 @@ from autocode.primitives.field import Field
 from autocode.primitives.function import Function
 from autocode.primitives.nameable import Nameable
 from autocode.primitives.property import Property
-from autocode.primitives.type import Type
+from autocode.primitives.autocode_type import Type
 from autocode.primitives.var import Var
