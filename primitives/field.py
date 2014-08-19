@@ -23,7 +23,7 @@ class Field(Definable):
     def __init__(self, name, ctype, value=None, static=False, visibility='public', props=None, nullable=True):
         if type(ctype) == str:
             ctype = Type.get(ctype)
-        assert isinstance(ctype, Type)
+
         super(Field, self).__init__(name, props=props, visibility=visibility)
         self.type = ctype
         self.static = static
