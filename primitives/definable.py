@@ -27,10 +27,10 @@ class Definable(Nameable):
     def __init__(self, name, props=None, description='', visibility='public'):
         super(Definable, self).__init__(name)
 
-        if props is None:
-            self.props = []
-        else:
-            self.props = props
+        self.props = []
+        if props is not None:
+            for p in props:
+                self.add_prop(p)
 
         self.provides = set([])
         self.requires = set([])
