@@ -1,8 +1,6 @@
 """
 Closure utilities.
 """
-import jsparser
-
 
 PRIMITIVE_TYPES = ['string', 'number', 'boolean', 'Array', 'Object', 'Function']
 BUILT_IN_VARS = {'Infinity', 'NaN', 'null', 'undefined', 'true', 'false', 'window', 'document', 'this',  # Values
@@ -22,7 +20,7 @@ PRIMITIVE_MAPPING = {
 }
 
 PYTHON_CONTAINER_MAPPING = {
-    'set': 'Object',
+    'set': 'Array',
     'list': 'Array',
     'dict': 'Object'
 }
