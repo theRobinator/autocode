@@ -33,6 +33,14 @@ class Field(Definable):
     def compile(self, owner, compile_types=settings.compile_types):
         """ Perform actions to ready whatever this is for rendering """
         if self.type is not None:
+            # Fix types
+            if self.visibility != 'public':
+                self.add_prop(self.visibility)
+            if self.type is not None:
+                if self.nullable:
+                    self.add_prop('type', self.type.name)
+                else:
+                    self.add_prop('type', '!' + self.type.name)
             if isinstance(owner, Document):
                 # This is a top level field, so it must be static
                 if compile_types:
