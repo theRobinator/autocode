@@ -20,7 +20,10 @@ def render(field, owner):
     if owner.name is None or owner.name == '':
         result.append('%s%s;' % (field.name, value_str))
     elif field.static:
-        result.append('%s.%s%s;' % (owner.name, field.name, value_str))
+        if field.name.startswith(owner.name + '.'):
+            result.append('%s%s' % (field.name, value_str))
+        else:
+            result.append('%s.%s%s;' % (owner.name, field.name, value_str))
     else:
         result.append('%s.prototype.%s%s;' % (owner.name, field.name, value_str))
 

@@ -24,7 +24,11 @@ def render(func, owner):
     if owner.name is None or owner.name == '':
         result.append('%s = function(%s) {' % (func.name, param_string))
     elif func.static:
-        result.append('%s.%s = function(%s) {' % (owner.name, func.name, param_string))
+        if func.name.startswith(owner.name + '.'):
+            # Pre-namespaced function
+            result.append('%s = function(%s) {' % (func.name, param_string))
+        else:
+            result.append('%s.%s = function(%s) {' % (owner.name, func.name, param_string))
     else:
         result.append('%s.prototype.%s = function(%s) {' % (owner.name, func.name, param_string))
 
