@@ -3,15 +3,18 @@ from autocode.primitives.autocode_type import Type
 
 
 class Var(Nameable):
-    """ A variable, with a name and a type. This does not support value assignment
-        specificaly because you should not be writing that in a templating language.
+    """ A variable, with a name and a type.
     """
 
     #: The variable's type.
     type = None
 
-    def __init__(self, name, var_type):
+    #: An optional value.
+    value = None
+
+    def __init__(self, name, var_type, value=None):
         if type(var_type) == str:
             var_type = Type.get(var_type)
         super(Var, self).__init__(name)
         self.type = var_type
+        self.value = value

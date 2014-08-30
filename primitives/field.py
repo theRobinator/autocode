@@ -14,13 +14,16 @@ class Field(Definable):
     #: Whether this field is static.
     static = False
 
+    #: Whether this field is a const.
+    const = False
+
     #: This field's default value.
     value = None
 
     #: Whether this value can be set to null.
     nullable = True
 
-    def __init__(self, name, ctype, value=None, static=False, visibility='public', props=None, nullable=True):
+    def __init__(self, name, ctype, value=None, static=False, visibility='public', props=None, nullable=True, const=False):
         if type(ctype) == str:
             ctype = Type.get(ctype)
 
@@ -29,18 +32,11 @@ class Field(Definable):
         self.static = static
         self.value = value
         self.nullable = nullable
+        self.const = const
 
     def compile(self, owner, compile_types=settings.compile_types):
         """ Perform actions to ready whatever this is for rendering """
         if self.type is not None:
-            # Fix types
-            if self.visibility != 'public':
-                self.add_prop(self.visibility)
-            if self.type is not None:
-                if self.nullable:
-                    self.add_prop('type', self.type.name)
-                else:
-                    self.add_prop('type', '!' + self.type.name)
             if isinstance(owner, Document):
                 # This is a top level field, so it must be static
                 if compile_types:

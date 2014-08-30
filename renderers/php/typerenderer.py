@@ -1,13 +1,9 @@
-from autocode.language_utils.closure import PRIMITIVE_MAPPING, PYTHON_CONTAINER_MAPPING
+from autocode.language_utils.php import PRIMITIVE_MAPPING, PYTHON_CONTAINER_MAPPING
 
 def normalize_type(typename):
     """ Return a normalized version of a type name, free of any language-specific modifiers. """
-    if typename.startswith('...'):
-        typename = typename[3:]
-    if typename[0] == '!' or typename[0] == '?':
-        typename = typename[1:]
-    if typename[-1] == '?' or typename[-1] == '=':
-        typename = typename[:-1]
+    if typename.endswith('[]'):
+        typename = typename[:-2]
     return typename
 
 
@@ -32,10 +28,11 @@ def render(typeobj, owner=None):
     """ Render what a type looks like in code.
         :param owner: The owner of the type.
     """
-    if typeobj.subtype is None:
+    if typeobj.subtype is None or typeobj.name != 'array':
         return typeobj.name
     else:
-        return '%s.<%s>' % (typeobj.name, typeobj.subtype)
+        # Guaranteed to be an array
+        return '%s[]' % typeobj.subtype
 
 
 def render_call(typeobj, owner=None, default_args=''):
