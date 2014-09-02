@@ -1,4 +1,5 @@
 from autocode import language_utils
+from autocode.settings import get_language
 
 
 class MagicAdapter(object):
@@ -22,20 +23,16 @@ class MagicAdapter(object):
         self.available_languages = {}
 
     def __getattr__(self, item):
-        if item == 'submodule_name':
-            return self.submodule_name
-
-        from autocode.settings import get_language
         language_name = get_language()
-        if language_name not in self.available_languages:
+        if language_name in self.available_languages:
+            mod = self.available_languages[language_name]
+        else:
             if self.submodule_name is None:
                 import_name = '%s.%s' % (self.parent_module, language_name)
             else:
                 import_name = '%s.%s.%s' % (self.parent_module, language_name, self.submodule_name)
             mod = __import__(import_name, fromlist=[self.parent_module, language_name])
             self.available_languages[language_name] = mod
-        else:
-            mod = self.available_languages[language_name]
 
         return getattr(mod, item)
 
