@@ -21,19 +21,16 @@ def render(cls, owner):
         indent_result.append("\n")
 
     # Constructor
-    constructor_body = ''
-    if cls.extends is not None and (cls.constructor is None or not cls.constructor.startswith('parent::__construct();')):
-        # If no goog.base is defined, add one
-        cls.constructor = 'parent::__construct();' + cls.constructor
+    if cls.constructor is not None and cls.constructor != '':
+        # Classes without constructors are allowed in PHP
+        from autocode.primitives import Function
+        constructor_func = Function('__construct', params=constructor_params)
+        constructor_func.visibility = cls.visibility
+        constructor_func.body = cls.constructor
+        constructor_func.compile(cls)
+        indent_result.append(constructor_func.render(cls))
 
-    from autocode.primitives import Function
-    constructor_func = Function('__construct', params=constructor_params)
-    constructor_func.visibility = cls.visibility
-    constructor_func.body = cls.constructor
-    constructor_func.compile(cls)
-    indent_result.append(constructor_func.render(cls))
-
-    indent_result.append('')
+        indent_result.append('')
 
     # Methods
     if len(cls.methods) > 0:
