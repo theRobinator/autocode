@@ -3,7 +3,7 @@ from autocode import settings
 
 
 class Document(object):
-    """ A document, containing zero or more definables. Its primary function is
+    """ A document, containing zero or more definables and/or strings. Its primary function is
         to manage provides and requires. It is also the main interface to the
         programmer that will have compile() called on it.
     """
@@ -36,14 +36,15 @@ class Document(object):
     def get_item(self, name):
         """ Get an item by name. """
         for i in self.items:
-            if i.name == name:
+            if hasattr(i, 'name') and i.name == name:
                 return i
         return None
     
     def compile(self, compile_types=settings.compile_types):
         """ Perform actions to ready the document for rendering. """
         for item in self.items:
-            item.compile(self, compile_types=compile_types)
+            if hasattr(item, 'compile'):
+                item.compile(self, compile_types=compile_types)
         for item in self.items:
             if hasattr(item, 'provides'):
                 self.provides.update(item.provides)
@@ -52,8 +53,8 @@ class Document(object):
         self.requires -= self.provides
         self._compiled = True
 
-    def render(self):
+    def render(self, sort_fields=True):
         """ Return a string containing what this would look like in code. """
         if not self._compiled:
             self.compile()
-        return documentrenderer.render(self)
+        return documentrenderer.render(self, sort_fields=sort_fields)

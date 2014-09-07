@@ -60,4 +60,4 @@ def fileize_name(name):
     """ Create a version of a name that can be used in a filename. """
     if name[0] == '$':
         name = name[1:]
-    return normalize_name(name).lower()
+    return name
