@@ -20,7 +20,7 @@ def render_comment(props, description=None):
         return ' *'
 
     result = []
-    if description != '':
+    if description != '' and description is not None:
         result.append(' * ' + description.replace("\n", "\n * "))
     for prop in props:
         result.append(' * ' + render(prop))

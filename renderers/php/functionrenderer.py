@@ -18,10 +18,15 @@ def render(func, owner):
         var_name = namerenderer.varify_name(param.name)
         if param.value is not None:
             var_name += '=' + param.value
-        if param.type is None:
-            func.add_prop('param', var_name)
+
+        if param.description:
+            desc_string = ' ' + param.description
         else:
-            func.add_prop('param', param.type.name, var_name)
+            desc_string = ''
+        if param.type is None:
+            func.add_prop('param', var_name + desc_string)
+        else:
+            func.add_prop('param', param.type.name, var_name + desc_string)
 
         if param.type is None or param.type.name in PRIMITIVE_TYPES:
             param_string_parts.append(var_name)

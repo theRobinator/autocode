@@ -1,8 +1,8 @@
-from autocode.primitives.nameable import Nameable
+from autocode.primitives.definable import Definable
 from autocode.primitives.autocode_type import Type
 
 
-class Var(Nameable):
+class Var(Definable):
     """ A variable, with a name and a type.
     """
 

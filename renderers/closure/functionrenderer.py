@@ -13,7 +13,11 @@ def render(func, owner):
         func.add_prop(func.visibility)
 
     for param in func.params:
-        func.add_prop('param', param.type, param.name)
+        if param.description:
+            func.add_prop('param', param.type, param.name + ' ' + param.description)
+        else:
+            func.add_prop('param', param.type, param.name)
+
     if func.return_type is not None:
         func.add_prop('return', func.return_type)
 

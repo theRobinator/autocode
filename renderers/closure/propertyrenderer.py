@@ -20,7 +20,7 @@ def render_comment(props, description=''):
         return ' *'
 
     result = []
-    if description != '':
+    if description != '' and description is not None:
         result.append(' * ' + description.replace("\n", "\n * "))
     for prop in props:
         if prop.name == 'inheritDoc':

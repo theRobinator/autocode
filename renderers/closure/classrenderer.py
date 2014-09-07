@@ -13,7 +13,10 @@ def render(cls, owner):
 
     cls.remove_all_props('param')
     for param in cls.params:
-        cls.add_prop('param', param.type, param.name)
+        if param.description:
+            cls.add_prop('param', param.type, param.name + ' ' + param.description)
+        else:
+            cls.add_prop('param', param.type, param.name)
 
     result = ['/**', cls.render_comment(), ' */']
 
