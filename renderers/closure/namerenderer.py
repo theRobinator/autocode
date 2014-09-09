@@ -21,6 +21,22 @@ def normalize_name(name):
     return ''.join(result)
 
 
+def denormalize_name(name):
+    """ Perform the reverse of normalize_name (this may lose information) """
+    name = name[0].lower() + name[1:]
+    result = []
+    i = 0
+    start = 0
+    while i < len(name):
+        if name[i].isupper():
+            result.append(name[start:i].lower())
+            start = i
+        i += 1
+    result.append(name[start:].lower())
+
+    return '_'.join(result)
+
+
 def privatize_name(name):
     """ Create the private version of a name. """
     if name[-1] != '_':
