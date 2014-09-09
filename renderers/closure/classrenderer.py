@@ -8,6 +8,12 @@ def render(cls, owner):
     if cls.extends is not None:
         cls.add_prop('extends', cls.extends)
 
+    if cls.implements is not None:
+        if cls.has_prop('implements'):
+            cls.remove_all_props('implements')
+        for i in cls.implements:
+            cls.add_prop('implements', i)
+
     if not cls.has_prop('constructor') and not cls.has_prop('interface'):
         cls.add_prop('constructor')
 

@@ -12,6 +12,8 @@ def render(cls, owner):
     inheritance_string = ''
     if cls.extends is not None:
         inheritance_string += ' extends %s' % cls.extends
+    if cls.implements is not None:
+        inheritance_string += ' implements %s' % ', '.join(cls.implements)
     result.append('class %s%s {' % (cls.name, inheritance_string))
     indent_result = []
 

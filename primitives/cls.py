@@ -12,6 +12,9 @@ class Class(Definable):
     #: The type that this class extends.
     extends = None
 
+    #: The type or types that this class implements (a list)
+    implements = None
+
     #: This class's fields
     fields = None
 
@@ -27,7 +30,7 @@ class Class(Definable):
     #: This class's type
     type = None
 
-    def __init__(self, full_name, params=None, extends=None, constructor_body=None, visibility='public', props=None):
+    def __init__(self, full_name, params=None, extends=None, implements=None, constructor_body=None, visibility='public', props=None):
         super(Class, self).__init__(full_name, props=props, visibility=visibility)
 
         self.extends = extends
@@ -35,6 +38,12 @@ class Class(Definable):
         self.methods = {}
         self.params = params or []
         self.constructor = constructor_body
+        if implements is not None:
+            if type(implements) == str:
+                self.implements = [implements]
+            else:
+                self.implements = implements
+
 
         self.type = Type.get(full_name)
 
