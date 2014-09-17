@@ -8,6 +8,6 @@ def render(enum, owner):
 
     result = ['/**', enum.render_comment(), ' */']
     result.append('%s = {' % enum.name)
-    result.append('    ' + ",\n    ".join('%s: %s' % i for i in enum.values))
+    result.append('    ' + ",\n    ".join('%s: %s' % i for i in sorted(enum.values)))
     result.append('};')
     return "\n".join(result)

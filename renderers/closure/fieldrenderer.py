@@ -13,7 +13,7 @@ def render(field, owner):
     result = ['/**', field.render_comment(), ' */']
 
     if field.value is not None:
-        value_str = ' = %s' % field.value
+        value_str = ' = %s;' % field.value
     else:
         value_str = ''
 
