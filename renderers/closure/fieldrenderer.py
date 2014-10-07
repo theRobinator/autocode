@@ -13,7 +13,7 @@ def render(field, owner):
     result = ['/**', field.render_comment(), ' */']
 
     if field.value is not None:
-        value_str = ' = %s;' % field.value
+        value_str = ' = %s' % field.value
     else:
         value_str = ''
 
@@ -21,7 +21,7 @@ def render(field, owner):
         result.append('%s%s;' % (field.name, value_str))
     elif field.static:
         if field.name.startswith(owner.name + '.'):
-            result.append('%s%s' % (field.name, value_str))
+            result.append('%s%s;' % (field.name, value_str))
         else:
             result.append('%s.%s%s;' % (owner.name, field.name, value_str))
     else:
