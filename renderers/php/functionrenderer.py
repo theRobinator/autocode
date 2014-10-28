@@ -43,9 +43,9 @@ def render(func, owner):
     result = ['/**', func.render_comment(), ' */']
 
     if func.static:
-        result.append('%s static function %s(%s) {' % (func.visibility, func.name, param_string))
+        result.append("%s static function %s(%s)\n{" % (func.visibility, func.name, param_string))
     else:
-        result.append('%s function %s(%s) {' % (func.visibility, func.name, param_string))
+        result.append("%s function %s(%s)\n{" % (func.visibility, func.name, param_string))
 
     if len(func.body) > 0:
         # indent the function body

@@ -30,6 +30,9 @@ class Class(Definable):
     #: This class's type
     type = None
 
+    #: A preferred order of methods
+    _method_order = None
+
     def __init__(self, full_name, params=None, extends=None, implements=None, constructor_body=None, visibility='public', props=None):
         super(Class, self).__init__(full_name, props=props, visibility=visibility)
 
@@ -38,6 +41,8 @@ class Class(Definable):
         self.methods = {}
         self.params = params or []
         self.constructor = constructor_body
+        self._method_order = []
+
         if implements is not None:
             if type(implements) == str:
                 self.implements = [implements]
@@ -79,6 +84,13 @@ class Class(Definable):
     def remove_method(self, method):
         """ Remove a method from this class. """
         del self.methods[method.name]
+
+    def reorder_methods(self, order_list):
+        """ Provide a preferred order of method names for printing. Method names that do not appear will be printed
+            in sorted order after the preferred ones.
+        :param order_list: A list of method names.
+        """
+        self._method_order = order_list
 
     def calculate_requires(self):
         """ Calculate requires needed to run the constructor. WARNING: This code's

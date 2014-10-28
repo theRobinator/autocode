@@ -14,7 +14,7 @@ def render(cls, owner):
         inheritance_string += ' extends %s' % cls.extends
     if cls.implements is not None:
         inheritance_string += ' implements %s' % ', '.join(cls.implements)
-    result.append('class %s%s {' % (cls.name, inheritance_string))
+    result.append("class %s%s\n{" % (cls.name, inheritance_string))
     indent_result = []
 
     # Fields
@@ -36,7 +36,14 @@ def render(cls, owner):
 
     # Methods
     if len(cls.methods) > 0:
-        indent_result.append("\n\n".join(x.render(cls) for x in utils.sort_methods(cls.methods.values())))
+        methods = []
+        preferred_methods = set()
+        for preferred_method in cls._method_order:
+            methods.append(cls.methods[preferred_method])
+            preferred_methods.add(preferred_method)
+        methods.extend(v for v in utils.sort_methods(cls.methods.values()) if v.name not in preferred_methods)
+
+        indent_result.append("\n\n".join(x.render(cls) for x in methods))
 
     # Indent the class body
     result.append('    ' + "\n".join(indent_result).replace("\n", "\n    "))
