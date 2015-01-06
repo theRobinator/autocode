@@ -13,10 +13,10 @@ class Enum(Definable):
     #: The type of the enum's values. Note that this only makes sense in some languages.
     value_type = None
 
-    def __init__(self, name, value_type=None, visibility='public', props=None):
+    def __init__(self, name, value_type=None, visibility='public', props=None, description=None):
         if type(value_type) == str:
             value_type = Type.get(value_type)
-        super(Enum, self).__init__(name, props=props, visibility=visibility)
+        super(Enum, self).__init__(name, props=props, visibility=visibility, description=description)
         self.value_type = value_type
 
         self.provides.add(name)

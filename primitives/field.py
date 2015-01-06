@@ -23,11 +23,11 @@ class Field(Definable):
     #: Whether this value can be set to null.
     nullable = True
 
-    def __init__(self, name, ctype, value=None, static=False, visibility='public', props=None, nullable=True, const=False):
+    def __init__(self, name, ctype, value=None, static=False, visibility='public', props=None, nullable=True, const=False, description=None):
         if type(ctype) == str:
             ctype = Type.get(ctype)
 
-        super(Field, self).__init__(name, props=props, visibility=visibility)
+        super(Field, self).__init__(name, props=props, visibility=visibility, description=description)
         self.type = ctype
         self.static = static
         self.value = value

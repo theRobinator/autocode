@@ -1,13 +1,17 @@
 """
-Closure utilities.
+Java utilities.
 """
 
 PRIMITIVE_TYPES = ['byte', 'short', 'int', 'long', 'float', 'double', 'boolean', 'char', 'String']
-BUILT_IN_VARS = {'Infinity', 'NaN', 'null', 'undefined', 'true', 'false', 'window', 'document', 'this',  # Values
-                 'alert', 'confirm', 'decodeURI', 'decodeURIComponent', 'encodeURI', 'encodeURIComponent', 'escape', 'eval', 'isFinite', 'isNaN', 'parseFloat', 'parseInt', 'clearTimeout', 'setTimeout', 'unescape',  # Functions
-                 'Array', 'Boolean', 'Date', 'Function', 'Iterator', 'JSON', 'Math', 'Number', 'Object', 'String', 'Proxy', 'ParallelArray', 'RegExp',  # Base classes
-                 'Error', 'EvalError', 'RangeError', 'ReferenceError', 'SyntaxError', 'TypeError', 'URIError'}  # Errors
+"""
+Java utilities.
+"""
 
+PRIMITIVE_TYPES = ['byte', 'short', 'int', 'long', 'float', 'double', 'boolean', 'char', 'String']
+BUILT_IN_VARS = {'true', 'false', 'null', 'this',  # Values
+                 'String', 'Object', 'Boolean', 'Integer', 'Double', 'Float', 'Char', 'Long', 'Array', 'Math', 'BigInteger', # Base classes
+                 'ArithmeticException', 'ArrayIndexOutOfBoundsException', 'ArrayStoreException', 'ClassCastException', 'IllegalArgumentException', 'IllegalMonitorStateException', 'IllegalStateException', 'IllegalThreadStateException',
+                 'IndexOutOfBoundsException', 'NegativeArraySizeException', 'NullPointerException', 'NumberFormatException', 'SecurityException', 'StringIndexOutOfBounds', 'UnsupportedOperationException'}  # Errors
 PRIMITIVE_MAPPING = {
     'str': 'String',
     'string': 'String',

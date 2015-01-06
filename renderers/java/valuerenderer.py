@@ -33,11 +33,11 @@ def render(value):
         key, val = value.popitem()
         key_type = type(key)
         value_type = type(val)
-        result.append('     put(%s,%s);' % (key, render(val)))
+        result.append('     put(%s,%s);' % (render(key), render(val)))
         for k, v in value.iteritems():
             if type(k) != key_type or type(v) != value_type:
                 raise Exception('keys/values must be of the same type')
-            result.append('     put(%s,%s);' % (k, render(v)))
+            result.append('     put(%s,%s);' % (render(k), render(v)))
 
         if key_type.__name__ in PRIMITIVE_MAPPING:
             java_key_type = PRIMITIVE_MAPPING.get(key_type.__name__)

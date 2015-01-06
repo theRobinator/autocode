@@ -23,15 +23,13 @@ def render(cls, owner):
         indent_result.append("\n")
 
     from autocode.primitives import Function
-    if len(constructor_params) > 0:
-        constructor_func = Function(cls.name, params=constructor_params)
-    else:
-        constructor_func = Function(cls.name)
 
-    constructor_func.visibility = cls.visibility
-    constructor_func.body = cls.constructor
-    constructor_func.compile(cls)
-    indent_result.append(constructor_func.render(cls))
+    if cls.constructor is not None and cls.constructor != '':
+        constructor_func = Function(cls.name, params=constructor_params)
+        constructor_func.visibility = cls.visibility
+        constructor_func.body = cls.constructor
+        constructor_func.compile(cls)
+        indent_result.append(constructor_func.render(cls))
 
     indent_result.append('')
 
