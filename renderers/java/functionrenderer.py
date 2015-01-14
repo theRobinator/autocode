@@ -1,4 +1,7 @@
 from autocode.renderers.java import namerenderer
+from autocode.language_utils.java import PRIMITIVE_TYPES
+from autocode.primitives.cls import Class
+
 
 def render_call(func, owner=None, default_args=None):
     """ Return what a call to this function would look like """
@@ -17,7 +20,6 @@ def render(func, owner):
             raise Exception('All Java functions other than constructors must have return types"')
 
     for param in func.params:
-
         if param.type is None:
             raise Exception('Could not determine the type of the param %s' % param.name)
 
@@ -41,7 +43,7 @@ def render(func, owner):
     result = ['/**', func.render_comment(), ' */']
 
     if func.name == owner.name:
-        result.append("%s %s(%s)" % (func.visibility, func.name, param_string))
+        result.append("%s %s(%s) {" % (func.visibility, func.name, param_string))
     elif func.static:
         result.append("%s static %s %s(%s) {" % (func.visibility, func.return_type, func.name, param_string))
     else:

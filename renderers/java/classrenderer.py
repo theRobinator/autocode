@@ -17,6 +17,11 @@ def render(cls, owner):
     result.append("class %s%s {" % (cls.name, inheritance_string))
     indent_result = []
 
+    if cls.enums is not None:
+        indent_result.append("\n")
+        indent_result.extend(x.render(cls) for x in (cls.enums.values()))
+        indent_result.append("\n")
+
     # Fields
     if len(cls.fields) > 0:
         indent_result.extend(x.render(cls) for x in utils.sort_fields(cls.fields.values()))
