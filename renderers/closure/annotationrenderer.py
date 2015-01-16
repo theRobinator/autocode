@@ -1,2 +1,2 @@
 def render(annotation, owner):
-    return
+    raise Exception("Annotations are not supported in Javascript")
