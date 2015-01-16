@@ -1,15 +1,15 @@
-import re
+from autocode import settings
 
 
 def render(field, owner):
     if field.type is None:
         raise Exception('Could not determine the type of the field %s' % field.type)
 
-    # add docs only if the field has a description or property
-    if (field.description is None or field.description == '') and len(field.props) == 0:
+    comments = field.render_comment()
+    if comments == " *" and settings.get_render_desctiptionless_doctage() is False:
         result = []
     else:
-        result = ['/**', field.render_comment(), ' */']
+        result = ['/**', comments, ' */']
 
     if field.value is not None:
         value_str = ' = %s' % field.value

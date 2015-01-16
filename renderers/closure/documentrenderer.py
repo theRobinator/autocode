@@ -26,8 +26,9 @@ def render(doc, sort_fields=True):
         for item in doc.items:
             for field_type, render_array in sort_map:
                 if isinstance(item, field_type):
+                    # enum is an instance of Class, skip render to avoid rendering enum twice
                     if type(item) is Enum and field_type is Class:
-                        text = ''
+                        continue
                     elif type(item) == str:
                         text = item
                     else:

@@ -1,4 +1,5 @@
 from autocode import utils
+from autocode import settings
 
 def render(enum, owner):
     enum.remove_all_props('param')
@@ -7,29 +8,27 @@ def render(enum, owner):
         raise Exception('Enums must have type')
 
     if enum.extends is not None:
-        raise Exception('Enums cannot extend other classes')
+        raise Exception('Enum cannot extends other classes')
 
-    if (enum.description is None or enum.description == '') and len(enum.props) == 0:
+    comments = enum.render_comment()
+    if comments == " *" and settings.get_render_desctiptionless_doctage() is False:
         result = []
     else:
-        result = ['/**', enum.render_comment(), ' */']
+        result = ['/**', comments, ' */']
 
     indent_result = []
     implements_string = ''
     if enum.implements is not None:
-        implements_string += 'implements %s' % ', '.join(enum.implements)
+        implements_string += ' implements %s' % ', '.join(enum.implements)
 
 
-    indent_result.append("%s enum %s %s {" % (enum.visibility, enum.name, implements_string))
+    indent_result.append("%s enum %s%s {" % (enum.visibility, enum.name, implements_string))
     i = 1
     for key, value in sorted(enum.values):
         if value is None:
-            enum_str = "%s" % key
+            enum_str = key
         else:
-            if type(value) == str:
-                enum_str = "%s(\"%s\")" % (key, value)
-            else:
-                enum_str = "%s(%s)" % (key, value)
+            enum_str = "%s(%s)" % (key, value)
 
         if i < len(enum.values):
             indent_result.append(enum_str + ',')

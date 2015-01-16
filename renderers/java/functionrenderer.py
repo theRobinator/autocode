@@ -1,7 +1,5 @@
 from autocode.renderers.java import namerenderer
-from autocode.language_utils.java import PRIMITIVE_TYPES
-from autocode.primitives.cls import Class
-
+from autocode import settings
 
 def render_call(func, owner=None, default_args=None):
     """ Return what a call to this function would look like """
@@ -37,10 +35,17 @@ def render(func, owner):
 
     param_string = ', '.join(param_string_parts)
 
-    if func.return_type is not None:
-        func.add_prop('return', func.return_type.name)
+    if func.return_type is not None and not func.has_prop('return'):
+        func.add_prop('return')
 
-    result = ['/**', func.render_comment(), ' */']
+    comments = func.render_comment()
+    if comments == " *" and settings.get_render_desctiptionless_doctage() is False:
+        result = []
+    else:
+        result = ['/**', comments, ' */']
+
+    if len(func.annotations) > 0:
+        result.extend(x.render(func) for x in func.annotations)
 
     if func.name == owner.name:
         result.append("%s %s(%s) {" % (func.visibility, func.name, param_string))

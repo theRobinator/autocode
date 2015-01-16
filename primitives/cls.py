@@ -33,10 +33,13 @@ class Class(Definable):
     #: A preferred order of methods
     _method_order = None
 
-    # The class's enums
+    #: The class's enums
     enums = None
 
-    def __init__(self, full_name, params=None, extends=None, implements=None, constructor_body=None, visibility='public', props=None, description=None):
+    #: The class's annotations
+    annotations = None
+
+    def __init__(self, full_name, params=None, extends=None, implements=None, constructor_body=None, visibility='public', props=None, description=None, annotation=None):
         super(Class, self).__init__(full_name, props=props, visibility=visibility, description=description)
 
         self.extends = extends
@@ -46,6 +49,7 @@ class Class(Definable):
         self.constructor = constructor_body
         self._method_order = []
         self.enums = {}
+        self.annotations = annotation or []
 
         if implements is not None:
             if type(implements) == str:

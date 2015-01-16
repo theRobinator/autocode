@@ -1,5 +1,6 @@
 from autocode.renderers.java import typerenderer
 from autocode import utils
+from autocode import settings
 
 
 def render(cls, owner):
@@ -7,7 +8,14 @@ def render(cls, owner):
     constructor_params = cls.params
     cls.params = []
 
-    result = ['/**', ' */']
+    comments = cls.render_comment()
+    if comments == " *" and settings.get_render_desctiptionless_doctage() is False:
+        result = []
+    else:
+        result = ['/**', comments, ' */']
+
+    if len(cls.annotations) > 0:
+        result.extend(x.render(cls) for x in cls.annotations)
 
     inheritance_string = ''
     if cls.extends is not None:

@@ -8,3 +8,4 @@ from autocode.primitives.nameable import Nameable
 from autocode.primitives.property import Property
 from autocode.primitives.autocode_type import Type
 from autocode.primitives.var import Var
+from autocode.primitives.annotation import Annotation

@@ -25,6 +25,16 @@ PYTHON_CONTAINER_MAPPING = {
     'dict': 'Object'
 }
 
+#: The doctags that appear in method or field signatures, so that they are redundant in comments.
+REDUNDANT_DOCTAGS = {
+    'author'
+    'param',
+    'returns',
+    'access',
+    'exception',
+    'throws',
+    'constructor'
+}
 
 def is_primitive_type(ctype):
     if type(ctype) == str:

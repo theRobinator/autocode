@@ -21,7 +21,10 @@ class Function(Definable):
     #: Whether the function is static.
     static = False
 
-    def __init__(self, name, params=None, return_type=None, body='', static=False, visibility='public', props=None):
+    #: Function annotations
+    annotations = None
+
+    def __init__(self, name, params=None, return_type=None, body='', static=False, visibility='public', props=None, annotations=None):
         super(Function, self).__init__(name, props=props, visibility=visibility)
 
         self.params = params or []
@@ -30,6 +33,7 @@ class Function(Definable):
         self.return_type = return_type
         self.body = body
         self.static = static
+        self.annotations = annotations or []
 
     def calculate_requires(self):
         """ Calculate requires needed to run this function. WARNING: This code's
