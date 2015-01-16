@@ -11,7 +11,7 @@ class SettingsManager(object):
 
     # Whether or not to render doctags that are already defined in method or field signatures, such as "@access" or
     # "@return". When this is False, these tags will not be rendered unless a description is added to them.
-    render_descriptionless_doctags = True
+    render_rendundant_doctags = True
 
 
 def get_language():
@@ -24,13 +24,13 @@ def set_language(language):
     """
     SettingsManager.language = language
 
-def set_render_descriptionless_doctage(value):
+def set_redundant_doctag_setting(value):
     if value not in [True, False]:
-        raise Exception("Invalid value provided to set render_descriptionless_doctags")
-    SettingsManager.render_descriptionless_doctags = value
+        raise Exception("Invalid value for provided to set render_descriptionless_doctags")
+    SettingsManager.render_rendundant_doctags = value
 
-def get_render_desctiptionless_doctage():
-    return SettingsManager.render_descriptionless_doctags
+def get_redundant_doctag_setting():
+    return SettingsManager.render_rendundant_doctags
 
 
 # Whether Type objects should compile themselves by default. If true, Type objects will be able to

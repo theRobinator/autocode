@@ -1,5 +1,6 @@
 from autocode.renderers.java import namerenderer
 from autocode import settings
+from autocode import utils
 
 def render_call(func, owner=None, default_args=None):
     """ Return what a call to this function would look like """
@@ -16,6 +17,7 @@ def render(func, owner):
 
     if func.return_type is None and func.name != owner.name:
             raise Exception('All Java functions other than constructors must have return types"')
+
 
     for param in func.params:
         if param.type is None:
@@ -39,7 +41,7 @@ def render(func, owner):
         func.add_prop('return')
 
     comments = func.render_comment()
-    if comments == " *" and settings.get_render_desctiptionless_doctage() is False:
+    if comments == utils.EMPTY_COMMENT and settings.get_redundant_doctag_setting() is False:
         result = []
     else:
         result = ['/**', comments, ' */']

@@ -9,7 +9,7 @@ def render(cls, owner):
     cls.params = []
 
     comments = cls.render_comment()
-    if comments == " *" and settings.get_render_desctiptionless_doctage() is False:
+    if comments == utils.EMPTY_COMMENT and settings.get_redundant_doctag_setting() is False:
         result = []
     else:
         result = ['/**', comments, ' */']

@@ -1,12 +1,12 @@
 from autocode import settings
-
+from autocode import utils
 
 def render(field, owner):
     if field.type is None:
         raise Exception('Could not determine the type of the field %s' % field.type)
 
     comments = field.render_comment()
-    if comments == " *" and settings.get_render_desctiptionless_doctage() is False:
+    if comments == utils.EMPTY_COMMENT and settings.get_redundant_doctag_setting() is False:
         result = []
     else:
         result = ['/**', comments, ' */']

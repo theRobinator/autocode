@@ -18,27 +18,25 @@ def render_comment(props, description=None):
         :param description: The description to appear above the properties.
     """
     if description is None and len(props) == 0:
-        return ' *'
+        return utils.EMPTY_COMMENT
 
-    # this if block checks if there are any useful docs or description to render
-    if (description is None or description == '') and settings.get_render_desctiptionless_doctage() is False:
-        has_useful_docs = False
+    useful_props = []
+    # this block checks if there are any useful docs to render
+    if settings.get_redundant_doctag_setting() is False:
         for prop in props:
             if prop.description != '' or prop.name not in utils.REDUNDANT_DOCTAGS:
-                has_useful_docs = True
-                break
-
-        if has_useful_docs is False:
-            return ' *'
+                useful_props.append(prop)
+    else:
+        useful_props = props
 
     result = []
     if description != '' and description is not None:
         result.append(' * ' + description.replace("\n", "\n * "))
-    for prop in props:
+    for prop in useful_props:
         result.append(' * ' + render(prop))
 
     result = "\n".join(result)
     if result == '':
-        return ' *'
+        return utils.EMPTY_COMMENT
     else:
         return result

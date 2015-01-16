@@ -8,10 +8,10 @@ def render(enum, owner):
         raise Exception('Enums must have type')
 
     if enum.extends is not None:
-        raise Exception('Enum cannot extends other classes')
+        raise Exception('Enums cannot extend other classes')
 
     comments = enum.render_comment()
-    if comments == " *" and settings.get_render_desctiptionless_doctage() is False:
+    if comments == utils.EMPTY_COMMENT and settings.get_redundant_doctag_setting() is False:
         result = []
     else:
         result = ['/**', comments, ' */']
@@ -36,6 +36,12 @@ def render(enum, owner):
             indent_result.append(enum_str + ';')
         i += 1
 
+    # Fields
+    if len(enum.fields) > 0:
+        indent_result.append("\n")
+        indent_result.extend(x.render(enum) for x in utils.sort_fields(enum.fields.values()))
+        indent_result.append("\n")
+
     from autocode.primitives import Function
     if enum.constructor is not None and enum.constructor != '':
         constructor_func = Function(enum.name, params=constructor_params)
@@ -45,11 +51,6 @@ def render(enum, owner):
         indent_result.append(constructor_func.render(enum))
 
     indent_result.append('')
-      # Fields
-    if len(enum.fields) > 0:
-        indent_result.append("\n")
-        indent_result.extend(x.render(enum) for x in utils.sort_fields(enum.fields.values()))
-        indent_result.append("\n")
 
     if len(enum.methods) > 0:
         methods = []
