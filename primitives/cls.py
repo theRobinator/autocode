@@ -33,8 +33,14 @@ class Class(Definable):
     #: A preferred order of methods
     _method_order = None
 
-    def __init__(self, full_name, params=None, extends=None, implements=None, constructor_body=None, visibility='public', props=None):
-        super(Class, self).__init__(full_name, props=props, visibility=visibility)
+    #: The class's enums
+    enums = None
+
+    #: The class's annotations
+    annotations = None
+
+    def __init__(self, full_name, params=None, extends=None, implements=None, constructor_body=None, visibility='public', props=None, description=None, annotation=None):
+        super(Class, self).__init__(full_name, props=props, visibility=visibility, description=description)
 
         self.extends = extends
         self.fields = {}
@@ -42,6 +48,8 @@ class Class(Definable):
         self.params = params or []
         self.constructor = constructor_body
         self._method_order = []
+        self.enums = {}
+        self.annotations = annotation or []
 
         if implements is not None:
             if type(implements) == str:
@@ -84,6 +92,21 @@ class Class(Definable):
     def remove_method(self, method):
         """ Remove a method from this class. """
         del self.methods[method.name]
+
+    def add_enum(self, enum):
+        """ Add a enum to this class. """
+        self.enums[enum.name] = enum
+
+    def remove_enum(self, enum):
+        """ Deletes a enum from this class. """
+        del self.enums[enum.name]
+
+    def get_enum_by_name(self, enum_name):
+        """ Gets enum by name"""
+        if enum_name in self.enums:
+            return self.enums[enum_name]
+
+        return None
 
     def reorder_methods(self, order_list):
         """ Provide a preferred order of method names for printing. Method names that do not appear will be printed
