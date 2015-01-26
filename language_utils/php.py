@@ -31,6 +31,8 @@ REDUNDANT_DOCTAGS = {
     'access',
 }
 
+EMPTY_COMMENT = ' *'
+
 def is_primitive_type(ctype):
     if type(ctype) == str:
         return ctype in PRIMITIVE_TYPES

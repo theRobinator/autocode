@@ -49,8 +49,9 @@ def render(enum, owner):
         constructor_func.body = enum.constructor
         constructor_func.compile(enum)
         indent_result.append(constructor_func.render(enum))
+        indent_result.append('')
 
-    indent_result.append('')
+
 
     if len(enum.methods) > 0:
         methods = []
