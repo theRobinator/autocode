@@ -26,7 +26,7 @@ def render(doc, sort_fields=True):
                     else:
                         text = item.render(doc)
                     if len(text) > 0:
-                        render_array.extend(["\n\n", text])
+                        render_array.extend([text, "\n\n"])
 
         result.extend(strings)
         result.extend(functions)
