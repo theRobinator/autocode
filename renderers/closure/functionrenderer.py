@@ -28,7 +28,8 @@ def render(func, owner):
     if owner.name is None or owner.name == '':
         result.append('%s = function(%s) {' % (func.name, param_string))
     elif func.static:
-        if func.name.startswith(owner.name + '.'):
+        from autocode.primitives import Document
+        if func.name.startswith(owner.name + '.') or (type(owner) == Document and func.name == owner.name):
             # Pre-namespaced function
             result.append('%s = function(%s) {' % (func.name, param_string))
         else:
