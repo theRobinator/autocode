@@ -2,6 +2,9 @@ def render(field, owner):
     if field.visibility != 'public':
         field.add_prop(field.visibility)
 
+    if field.const:
+        field.add_prop('const')
+
     if field.has_prop('type'):
         field.remove_all_props('type')
     if field.type is not None:
