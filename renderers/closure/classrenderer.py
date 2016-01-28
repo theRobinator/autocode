@@ -28,14 +28,14 @@ def render(cls, owner):
 
     result.append('%s = function(%s) {' % (cls.name, ', '.join(x.name for x in cls.params)))
 
-    if cls.extends is not None and (cls.constructor is None or not cls.constructor.startswith('goog.base')):
+    if cls.extends is not None and not cls.has_prop('interface') and (cls.constructor is None or not cls.constructor.startswith('goog.base')):
         # If no goog.base is defined, add one
         result.append('    goog.base(this);')
     if cls.constructor is not None:
         # Indent the constructor body
         result.append('    ' + cls.constructor.replace("\n", "\n    "))
     result.append('};');
-    if cls.extends is not None:
+    if cls.extends is not None and not cls.has_prop('interface'):
         result.append('goog.inherits(%s, %s);' % (cls.name, cls.extends))
 
     result.append("\n")
